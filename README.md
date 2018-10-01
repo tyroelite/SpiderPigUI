@@ -1,2 +1,0 @@
-# SpiderPigUI
-Created with CodeSandbox
