@@ -10,12 +10,12 @@ const ProfileWrapper = styled.div`
 const NavTitle = styled.div`
   height: 57px;
   display:flex;
-
+  justify-content: center
   
   &>a {
     font-weight: 400
     font-size: 22px;
-    width:100%;
+    //width:100%;
     justify-self: center;
     align-self: center;
     line-height:59px

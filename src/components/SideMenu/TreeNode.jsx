@@ -33,6 +33,13 @@ const StyledLI = styled.li`
     display: block;
   }
 
+  & > a > .hover {
+    display: none;
+  }
+  & > a:hover > .hover {
+    display: block;
+  }
+
   & > a > i {
     padding-right: 5px;
     width: 26px;
@@ -48,6 +55,23 @@ const StyledLI = styled.li`
     font-size: 10px;
     color: #C4CFDA;
     margin-right: 4px;
+  }
+
+  & > a > span.expanded {
+    /* Safari */
+    -webkit-transform: rotate(-90deg);
+
+    /* Firefox */
+    -moz-transform: rotate(-90deg);
+
+    /* IE */
+    -ms-transform: rotate(-90deg);
+
+    /* Opera */
+    -o-transform: rotate(-90deg);
+
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
   }
 `;
 
@@ -84,7 +108,7 @@ const ChildMenu = styled.ul`
 class TreeNode extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { children: [] };
+    this.state = { children: [], expanded: false };
     this.onCategorySelect = this.onCategorySelect.bind(this);
     this.onChildDisplayToggle = this.onChildDisplayToggle.bind(this);
   }
@@ -112,6 +136,8 @@ class TreeNode extends React.Component {
       }
     }
 
+    this.setState({ expanded: !this.state.expanded });
+
     ev.preventDefault();
     ev.stopPropagation();
   }
@@ -123,10 +149,10 @@ class TreeNode extends React.Component {
       active: this.state.children.length ? true : false,
       sub_menu: this.state.children.length ? false : true
     });
-    var icon = this.props.data.icon ? "fas " + this.props.data.icon : "";
+    var icon = this.props.data.icon ? "fas " + this.props.data.icon : null;
 
     const level = this.props.level;
-
+    const expandedClass = this.state.expanded ? "expanded" : "";
     return (
       <StyledLI
         className={classes}
@@ -139,15 +165,19 @@ class TreeNode extends React.Component {
             !hasChildren ? this.onCategorySelect : this.onChildDisplayToggle
           }
         >
-          <i className={icon} />
+          {icon && <i className={icon} />}
           {this.props.data.name}
+
           {hasChildren ? (
-            <span
-              className="fas fa-chevron-down"
-              onClick={this.onChildDisplayToggle}
-            />
+            <React.Fragment>
+              <span
+                className={"fas fa-chevron-down " + expandedClass}
+                onClick={this.onChildDisplayToggle}
+              />
+              <span className="fas fa-plus hover" />
+            </React.Fragment>
           ) : (
-            false
+            <span className="fas fa-clone hover" />
           )}
         </a>
         <ChildMenu className="nav child_menu">

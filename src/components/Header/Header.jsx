@@ -21,6 +21,7 @@ const HeaderLink = styled.div`
   margin-left: ${props => (props.right ? "auto" : "")};
   text-align: ${props => (props.right ? "right" : "left")};
   padding: 5px;
+  cursor: pointer;
 `;
 
 class Header extends Component {
