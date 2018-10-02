@@ -15,12 +15,31 @@ const StyledLI = styled.li`
   `}
 
   & > a {
+    ${props =>
+      props.active &&
+      props.level === 1 &&
+      `
+      text-shadow: rgba(0,0,0,.25) 0 -1px 0;
+      background: linear-gradient(#334556, #2C4257), #2A3F54);
+      box-shadow: rgba(0,0,0,.25) 0 1px 0, inset rgba(255,255,255,.16) 0 1px 0;
+    `}
+  }
+
+  & > a {
     padding: 13px 15px 12px;
     position: relative;
+    color: #E7E7E7;
+    font-weight: 500;
+    display: block;
   }
 
   & > a > i {
     padding-right: 5px;
+    width: 26px;
+    opacity: .99;
+    display: inline-block;
+    font-style: normal;
+    font-size: 18px;
   }
 
   & > a > span {
@@ -33,17 +52,32 @@ const StyledLI = styled.li`
 `;
 
 const ChildMenu = styled.ul`
+  padding-inline-start: 0px;
+
   & > li:before {
     background: #425668;
     bottom: auto;
     content: "";
     height:8px;
-    //left: 23px;
-    margin-top: 5px;
+    left: 23px;
+    margin-top: 15px;
     position: absolute;
     right: auto;
     width: 8px
     border-radius: 50%;
+  }
+
+  & > li:after {
+    border-left: 1px solid #425668;
+    bottom: 0;
+    content: " ";
+    left: 27px;
+    position: absolute;
+    top: 0;
+  }
+
+  &>li {
+    padding-left:36px;
   }
 `;
 
@@ -56,7 +90,10 @@ class TreeNode extends React.Component {
   }
   //var TreeNode = React.createClass({
   getInitialState() {
-    return { children: [] };
+    return {
+      children: [],
+      expanded: false
+    };
   }
   onCategorySelect(ev) {
     if (this.props.onCategorySelect) {
@@ -69,11 +106,12 @@ class TreeNode extends React.Component {
   onChildDisplayToggle(ev) {
     if (this.props.data.children) {
       if (this.state.children && this.state.children.length) {
-        this.setState({ children: null });
+        this.setState({ children: null, expanded: false });
       } else {
-        this.setState({ children: this.props.data.children });
+        this.setState({ children: this.props.data.children, expanded: true });
       }
     }
+
     ev.preventDefault();
     ev.stopPropagation();
   }

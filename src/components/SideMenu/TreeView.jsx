@@ -42,7 +42,7 @@ class TreeView extends React.Component {
   onSelect(node) {
     if (this.state.selected) {
       this.state.selected.setState({ selected: false });
-      console.log(node.props.data.name);
+      console.log("Data.Name: " + node.props.data.name);
     }
     this.setState({ selected: node });
     node.setState({ selected: true });

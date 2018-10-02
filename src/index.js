@@ -48,7 +48,7 @@ class App extends Component {
     return (
       <Container>
         <Header toggleMenu={this.toggleMenu} />
-        <SideMenu width={this.state.showMenu ? "200px" : "0px"}>Side</SideMenu>
+        <SideMenu width={this.state.showMenu ? "230px" : "0px"}>Side</SideMenu>
         <Content>Content</Content>
         <Footer>Footer</Footer>
       </Container>
